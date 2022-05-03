@@ -18,27 +18,27 @@
   </nav>
 
 
-  <h1>Agregar Productos</h1>
   <div class="container">
+    <h1>Agregar Productos</h1>
     <!-- <form action="#" method="post"> -->
-      <div class="form-group">
-        <label for="title">Nombre:</label>
-        <input type="text" id="title" name="title" class="form-control" placeholder="Ej: taladro, silla, etc" />
-      </div>
+    <div class="form-group">
+      <label for="title">Nombre:</label>
+      <input type="text" id="title" name="title" class="form-control" placeholder="Ej: taladro, silla, etc" />
+    </div>
 
-      <div class="form-group">
-        <label for="price">Precio:</label>
-        <input type="text" id="price" name="price" class="form-control" placeholder="Ej: 2000" />
-      </div>
+    <div class="form-group">
+      <label for="price">Precio:</label>
+      <input type="text" id="price" name="price" class="form-control" placeholder="Ej: 2000" />
+    </div>
 
-      <div class="form-group">
-        <label for="thumbnail">URL:</label>
-        <input type="text" id="thumbnail" name="thumbnail" class="form-control"
-          placeholder="https://http2.mlstatic.com/D_NQ_NP_896351-MLA40518149904_012020-O.webp" />
-      </div>
-      <button id="btn-addproduct" class="btn btn-success">Agregar</button>
+    <div class="form-group">
+      <label for="thumbnail">URL:</label>
+      <input type="text" id="thumbnail" name="thumbnail" class="form-control"
+        placeholder="https://http2.mlstatic.com/D_NQ_NP_896351-MLA40518149904_012020-O.webp" />
+    </div>
+    <button id="btn-addproduct" class="btn btn-success">Agregar</button>
     <!-- </form> -->
-    
+
   </div>
 
   <!--Your new content will be displayed in here-->
@@ -50,7 +50,8 @@
       <label for="email">Your mail</label>
       <input type="text" id="email" name="email" class="form-control" placeholder="your@mail.com" />
     </div>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="ingresa un mensaje"></textarea>
+    <div class="tableposts" id="printposts"></div>
+    <textarea class="form-control" id="msg" rows="3" placeholder="ingresa un mensaje"></textarea>
     <button id="btn-send" class="btn btn-success mt-3">Enviar</button>
   </div>
 
@@ -99,6 +100,14 @@
   </div>
 {{/if}}
   </div>
+</script>
+
+  <script id="msg-template" type="text/x-handlebars-template">
+  {{#if myposts}}
+    {{#each myposts}}
+      <p><span style="color: blue;">{{email}} </span> <span style="color: brown;">{{create_at}}</span><span style="color: green;">: {{msg}}</span> </p>
+  {{/each}}
+{{/if}}
 </script>
 
 

@@ -1,4 +1,5 @@
 const Contenedor = require("./Contenedor");
+const Mensaje = require("./Mensaje");
 
 const product1 = {
   title: "Taladro",
@@ -21,8 +22,12 @@ const product3 = {
 };
 
 const myContenedor = new Contenedor("productos.txt");
+const myPosts = new Mensaje();
 // myContenedor.save(product1);
 // myContenedor.save(product2);
 // myContenedor.save(product3);
 
-module.exports = myContenedor;
+module.exports = {
+  myContenedor,
+  myPosts
+};
