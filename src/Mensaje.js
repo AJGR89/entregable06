@@ -2,51 +2,71 @@ const fs = require("fs");
 
 class Mensaje {
   /* CONSTRUCTOR */
-  constructor(name) {
-    this.nameFile = name;
-    this._uriFile = `./src/files/posts.txt`;
-    this._emptyFile;
-    this._id;
-    this._posts = [];
-
-    try {
-      const posts = fs.readFileSync(this._uriFile, "utf-8");
-      if (posts == "") {
-        this._posts = [];
-      } else {
-        this._posts = JSON.parse(posts);
-      }
-      console.log("incosntructor, posts: ", posts);
-    } catch (error) {
-      console.log("ERROR EN CONSTRUCTOR\n\n\n\n",error);
-      this._posts = [];
-    }
+  /* CONSTRUCTOR */
+  constructor(db) {
+    this.db = db;
+    this.table_name = "posts"
+    this.init = false;
   }
+  /* CREATE TABLE */
+  dbInit(db) {
+    db.schema
+      .createTable(this.table_name, (table)=> {
+        table.increments("id");
+        table.string("email");
+        table.string("msg");
+        table.timestamp("create_at").defaultTo(this.db.fn.now());
+        
+      })
+      .then(() => {
+        this.init = true;
+        console.log('error AQUII TRUE')
+      })
+      .catch((error) => {
+        console.log("Constructor error: ",error)
+        this.init = false;
+      })
+      // .finally(() => {
+      //   db.destroy();
+      // });
+
+}
 
   /* SAVE ELEMENT */
-  save(msg) {
+  async save(msg) {
     try {
-        const rightNow =new Date();
-      const mydate = `[${rightNow.getDate()}/${rightNow.getMonth()+1}/${rightNow.getFullYear()} ${rightNow.getHours()}:${rightNow.getMinutes()}:${rightNow.getSeconds()}]`  
-      const newMsg = {...msg, create_at: mydate};
-      this._posts.push(newMsg);
-      fs.writeFileSync(this._uriFile, JSON.stringify(this._posts));
-      return newMsg;
+      this.init = await this.db.schema.hasTable(this.table_name);
+      if (this.init == false) {
+        this.dbInit(this.db);
+      }
+      const addpost = await this.db(this.table_name).insert(msg);
+      return addpost;
     } catch (error) {
       console.log("[save()]: could not save object");
       console.log(error)
       return null;
     }
+    // finally{
+    //   this.db.destroy();
+    // }
   }
 
  /* GET ELEMENTS */
-  getAll() {
+  async getAll() {
     try {
-      const content = fs.readFileSync(this._uriFile, "utf-8");
-      return JSON.parse(content);
+      this.init = await this.db.schema.hasTable(this.table_name);
+      if (this.init == false) {
+        this.dbInit(this.db);
+      }
+      const addpost = await this.db.from(this.table_name).select('*');
+      return addpost;
     } catch (error) {
-      console.log(error);
+      console.log("getAll error: ",error)
+      return null;
     }
+    // finally{
+    //   this.db.destroy();
+    // }
   }
 }
 

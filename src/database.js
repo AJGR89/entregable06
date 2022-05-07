@@ -1,5 +1,6 @@
 const Contenedor = require("./Contenedor");
 const Mensaje = require("./Mensaje");
+const { db_mysql,db_sqlite3 } = require("./options/options");
 
 const product1 = {
   title: "Taladro",
@@ -20,14 +21,20 @@ const product3 = {
   thumbnail:
     "https://http2.mlstatic.com/D_NQ_NP_919851-MLA48051950156_102021-O.webp",
 };
+const msg1 = {
+  email: "a@a",
+  msg: "hola mundo"
+}
+const msg2 = {
+  email: "b@b",
+  msg: "hola mundo to"
+}
 
-const myContenedor = new Contenedor("productos.txt");
-const myPosts = new Mensaje();
-// myContenedor.save(product1);
-// myContenedor.save(product2);
-// myContenedor.save(product3);
+myContenedor = new Contenedor(db_mysql);
+myPosts = new Mensaje(db_sqlite3);
+
 
 module.exports = {
   myContenedor,
-  myPosts
+  myPosts,
 };

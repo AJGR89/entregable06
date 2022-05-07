@@ -1,122 +1,132 @@
-const fs = require("fs");
-
 class Contenedor {
   /* CONSTRUCTOR */
-  constructor(name) {
-    this.nameFile = name;
-    this._uriFile = `./src/files/${this.nameFile}`;
-    this.uriID = "./src/files/lastid.txt";
-    this._emptyFile;
-    this._id;
-    this._products = [];
+  constructor(db) {
+    this.db = db;
+    this.init = false;
+  }
+  /* CREATE TABLE */
+  dbInit(db) {
+      db.schema
+        .createTable("products", (table)=> {
+          table.increments("id");
+          table.string("title");
+          table.integer("price");
+          table.string("thumbnail");
+          
+        })
+        .then(() => {
+          this.init = true;
+          console.log('error AQUII TRUE')
+        })
+        .catch((error) => {
+          this.init = false;
+        })
+        // .finally(() => {
+        //   db.destroy();
+        // });
 
-    try {
-      this._id = fs.readFileSync(this.uriID, "utf-8");
-    } catch (error) {
-      console.log(
-        "***********************************************************************"
-      );
-      fs.writeFileSync(this.uriID, "1");
-      this._id = 0;
-    }
-
-    try {
-      const products = fs.readFileSync(this._uriFile, "utf-8");
-      if (products == "") {
-        this._products = [];
-      } else {
-        this._products = JSON.parse(products);
-      }
-      console.log("incosntructor, products: ", products);
-    } catch (error) {
-      console.log(error);
-      this._products = [];
-    }
   }
 
   /* SAVE ELEMENT */
-  save(product) {
+  async save(product) {
     try {
-      this._id++;
-      const newProduct = { _id: this._id, ...product };
-      this._products.push(newProduct);
-      fs.writeFileSync(this._uriFile, JSON.stringify(this._products));
-      fs.writeFileSync(this.uriID, this._id.toString());
-      return newProduct;
+      this.init = await this.db.schema.hasTable("products");
+      if (this.init == false) {
+        this.dbInit(this.db);
+      }
+      const addproduct = await this.db("products").insert(product);
+      return addproduct;
     } catch (error) {
-      console.log("[save()]: could not save object");
+      console.log("[save()]: could not save object", error);
       return null;
-    }
+    } 
+    // finally {
+    //   this.db.destroy();
+    // }
   }
 
   /* GET ELEMENT */
-  getById(id) {
-    let element = null;
-    this._products.forEach((el, index) => {
-      if (el._id === id) {
-        element = el;
+  async getById(id) {
+    try {
+      if (this.init == false) {
+        await this.dbInit(this.db);
       }
-    });
-    return element;
+      const element = await this.db("products").where({ id: id }).select("*");
+      return element;
+    } catch (error) {
+      console.log(error);
+    } 
+    // finally {
+    //   this.db.destroy();
+    // }
   }
 
   /* GET ELEMENTS */
-  getAll() {
+  async getAll() {
     try {
-      const content = fs.readFileSync(this._uriFile, "utf-8");
-      return JSON.parse(content);
+      if (this.init == false) {
+        this.dbInit(this.db);
+      }
+      const elements = await this.db.from("products").select("*");
+      const result = Object.values(JSON.parse(JSON.stringify(elements)));
+      // console.log(result)
+      return elements;
     } catch (error) {
       console.log(error);
-    }
+    } 
+    // finally {
+    //   this.db.destroy();
+    // }
   }
 
   /* DELETE ELEMENT */
-  deleteById(id) {
-    let index4delete = null;
+  async deleteById(id) {
     try {
-      this._products.forEach((el, index) => {
-        if (el._id === id) {
-          index4delete = index;
-        }
-      });
-      if (index4delete != null) {
-        this._products.splice(index4delete, 1);
-        fs.writeFileSync(this._uriFile, JSON.stringify(this._products));
-        return true;
-      }return false;
+      if (this.init == false) {
+        await this.dbInit(this.db);
+      }
+      const element = await this.db("products").where({ id: id }).del();
+      return element;
     } catch (error) {
       console.log(error);
-    }
+    } 
+    // finally {
+    //   this.db.destroy();
+    // }
   }
 
   /* DELETE ELEMENTS */
-  deleteAll() {
+  async deleteAll() {
     try {
-      const ready = fs.openSync(this._uriFile, "w");
-      this._products = [];
+      if (this.init == false) {
+        await this.dbInit(this.db);
+      }
+      const element = await this.db("products").del();
+      return element;
     } catch (error) {
-      console.log("[deleteAll()]: could not delete all elements");
-    }
+      console.log(error);
+    } 
+    // finally {
+    //   this.db.destroy();
+    // }
   }
 
   /* UPDATE ELEMENT */
-  updateById(id,product){
-    const Id = id;
-    let index4update = null;
+  async updateById(id, product) {
     try {
-      this._products.forEach((el, index) => {
-        if (el._id === Id) {
-          index4update = index;
-        }
-      });
-      if (index4update != null) {
-        this._products[Id] = product;
-        fs.writeFileSync(this._uriFile, JSON.stringify(this._products));
-        return true;
-      }return false;
+      if (this.init == false) {
+        await this.dbInit(this.db);
+      }
+      const element = await this.db("products")
+        .where({ id: id })
+        .update(product);
+      return element;
     } catch (error) {
       console.log(error);
-    }
+    } 
+    // finally {
+    //   this.db.destroy();
+    // }
   }
 }
 
