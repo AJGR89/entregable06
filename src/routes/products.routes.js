@@ -1,6 +1,6 @@
 const express = require("express");
 const { Router } = express;
-const myContenedor = require("../database");
+// const myContenedor = require("../database");
 const path = require("path");
 const {app, server,io} = require('../app');
 const { faker } = require('@faker-js/faker');

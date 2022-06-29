@@ -35,7 +35,6 @@ app.use("/api/productos", productsRoutes);
 app.use("/api/", productsRoutes);
 
 module.exports = {
-  app,
   server,
   io
 
