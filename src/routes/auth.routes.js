@@ -3,6 +3,7 @@ const { Router } = express;
 const { myProducts } = require("../database");
 const { checkLogged } = require("../middlewares/auth");
 const passport = require("passport");
+const {info} = require('../config')
 
 const router = Router();
 
@@ -83,5 +84,11 @@ router.get("/logout", (req, res) => {
     }
   });
 });
+
+/* get INFO */
+router.get('/info',(req,res)=>{
+  res.render("info", {info:info ,layout: false });
+})
+
 
 module.exports = router;

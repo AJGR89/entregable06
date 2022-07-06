@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Info</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="">Info</h1>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row"> <p class="font-weight-bold"> Argumentos de entrada: </p>  {{info.countargs}}</div>
+          <div class="row"> <p class="font-weight-bold"> Plataforma: </p>{{info.platform}}</div>
+          <div class="row"> <p class="font-weight-bold"> Version node.js: </p>{{info.version}}</div>
+          <div class="row"> <p class="font-weight-bold"> Memoria total reservada: </p>{{info.mem}}</div>
+          <div class="row"> <p class="font-weight-bold"> PATH: </p> {{info.execpath}}</div>
+          <div class="row"> <p class="font-weight-bold"> Process ID: </p>{{info.pid}}</div>
+          <div class="row"> <p class="font-weight-bold"> Ruta del proyecto: </p>{{info.path}}</div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

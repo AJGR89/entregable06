@@ -13,6 +13,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const myUsers = require("./database");
 const bcrypt = require("bcrypt");
 const User = require("./models/user");
+const forkRoutes = require("./routes/fork.routes");
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -55,6 +57,7 @@ app.set("views", path.resolve(__dirname, "./views"));
 
 app.use("/api/productos", productsRoutes);
 app.use("/api/", productsRoutes);
+app.use("/randoms", forkRoutes);
 app.use("/", authRoutes);
 
 passport.use(
