@@ -2,6 +2,8 @@ const { connect, mongoose } = require("mongoose");
 const { MONGODB_URI } = require("../config");
 const Message = require("../models/message");
 const Product = require("../models/product");
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 // CLASS MESSAGES MONGO
 class MensajesMongo {
@@ -68,7 +70,6 @@ class MensajesMongo {
       console.log("[deleteAll()]: could not delete all elements");
     }
   }
-
 }
 
 // CLASS PRODUCTS MONGO
@@ -136,7 +137,63 @@ class ProductsMongo {
       console.log("[deleteAll()]: could not delete all elements");
     }
   }
-
 }
 
-module.exports = {MensajesMongo,ProductsMongo};
+// CLASS USERS MONGO
+class UsersMongo {
+  /* CONSTRUCTOR */
+  constructor() {
+    try {
+      if (mongoose.connection.readyState == 0) {
+        const db = connect(MONGODB_URI);
+        console.log("DB connected to MONGO");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  /* GET ELEMENT */
+  async getUser(username) {
+    try {
+      const user = await User.findOne(username);
+      return user;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+  /* SAVE USER */
+  async save(user) {
+    try {
+      const password = bcrypt.hashSync(
+        user.password,
+        bcrypt.genSaltSync(10),
+        null
+      );
+      user.password = password;
+      const newUser = await User.create(user);
+      return newUser;
+    } catch (error) {
+      console.log("[save()]: could not save object  ", error);
+      return error;
+    }
+  }
+  /* IS VALID */
+  async isValid(username, password) {
+    try {
+      const user = await getUser(username);
+      if (!user) {
+        return false;
+      }
+      return bcrypt.compareSync(password, user.password);
+    } catch (error) {
+      return error;
+    }
+  }
+}
+
+module.exports = {
+  MensajesMongo,
+  ProductsMongo,
+  UsersMongo,
+};

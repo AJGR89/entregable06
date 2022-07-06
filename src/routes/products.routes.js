@@ -39,7 +39,7 @@ router.get("/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const product = await myProducts.getById(id);
-    console.log(product);
+    // console.log(product);
     if (product == null) {
       res.status(404).json({ error: "producto no encontrado" });
       return;
@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
       const allproducts = await myProducts.getAll();
       const products = JSON.parse(JSON.stringify(allproducts));
       //   socket.emit('allproducts',{products:products})
-      res.status(200).redirect('/');
+      res.status(200).redirect("/");
     } else {
       res.status(500).json({ error: "producto no creado" });
     }

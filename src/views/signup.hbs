@@ -13,11 +13,11 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="mb-5px"> Login de usuario </h1>
-      <form action="http://localhost:3001/login" method="post">
+      <h1 class="mb-5px"> Registro de usuario </h1>
+      <form action="/signup" method="post">
         {{! <form> }}
         <div class="form-group">
-          <label for="username">NickName</label>
+          <label for="username">Usuario</label>
           <input
             type="text"
             class="form-control"
@@ -39,14 +39,49 @@
             placeholder="Password"
           />
         </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="firstName">firstName</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            name="firstName"
+            placeholder="firstName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">lastName</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            name="lastName"
+            placeholder="lastName"
+          />
+        </div>
         <button
           type="submit"
           id="btn-login"
           class="btn text-dark bg-success"
-        >Login</button>
+        >Sign Up</button>
+        <br />
       </form>
-      <form action="/signup">
-        <button class="btn text-dark bg-success">Sing Up</button>
+      <form action="/login">
+        <button
+          type="submit"
+          id="btn-go-login"
+          class="btn text-dark bg-success"
+        >Login</button>
       </form>
     </div>
   </body>
