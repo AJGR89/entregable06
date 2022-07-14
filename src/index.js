@@ -22,7 +22,7 @@ const mensajes = new schema.Entity("mensajes", {
   posts: [post],
 });
 
-/* SERVER */
+// /* SERVER */
 server.listen(PORT, () => {
   console.log(`Server on port: http://localhost:${PORT}/`);
 });

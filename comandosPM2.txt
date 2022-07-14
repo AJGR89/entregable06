@@ -1,0 +1,13 @@
+MODO FORK ENVIANDO ARGUMENTOS
+pm2 start ./src/index.js --name="entregable" --watch -- -p 8086 --mode "CLUSTER"
+
+
+MODO CLUSTER ENVIAQNDO ARGUMENTOS
+pm2 start ./src/index.js --name="entregable" --watch -i max -- -p 8086 --mode "CLUSTER"
+
+
+Para detener 
+pm2 stop all
+
+Para eliminar
+pm2 delete all

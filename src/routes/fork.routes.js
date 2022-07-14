@@ -3,6 +3,7 @@ const { fork } = require("child_process");
 const { query } = require("express");
 const { Router } = express;
 const path = require("path");
+const { PORT } = require("../config");
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router.get("/", (req, res) => {
     console.log(objrandoms)
     // const randoms = objrandoms
     // res.render("notblocking", { objrandoms:JSON.stringify(objrandoms) , layout: false });
-    res.json( objrandoms);
+    res.json( {port:PORT, data:objrandoms});
   });
 });
 

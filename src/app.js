@@ -1,9 +1,6 @@
 const express = require("express");
 const path = require("path");
 const { create } = require("express-handlebars");
-const app = express();
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
 const productsRoutes = require("./routes/products.routes");
 const authRoutes = require("./routes/auth.routes");
 const session = require("express-session");
@@ -14,7 +11,12 @@ const myUsers = require("./database");
 const bcrypt = require("bcrypt");
 const User = require("./models/user");
 const forkRoutes = require("./routes/fork.routes");
+const cluster = require("cluster");
+const { MODE, PORT, cpus } = require("./config");
 
+const app = express();
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -142,7 +144,6 @@ function createHash(password) {
 function validatePass(user, password) {
   return bcrypt.compareSync(password, user.password);
 }
-
 module.exports = {
   server,
   io,

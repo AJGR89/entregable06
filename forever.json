@@ -1,0 +1,13 @@
+
+{
+    "__comment": "configuracion forever, forever start ./forever.json",
+    "uid": "myapp",
+    "append": true,
+    "watch": true,
+    "script": "./src/index.js",
+    "sourceDir": "C:/Users/Electro-PC/Documents/coderhouse/tareas/entregable06",
+    "logFile": "./logs/forever.log",
+    "outFile": "./logs/out.log",
+    "errFile": "./logs/error.log",
+    "args":["-p",8085,"--mode","CLUSTER"]
+}
