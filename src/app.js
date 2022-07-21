@@ -13,6 +13,7 @@ const User = require("./models/user");
 const forkRoutes = require("./routes/fork.routes");
 const cluster = require("cluster");
 const { MODE, PORT, cpus } = require("./config");
+const {loggerRoutes,loggerNoRoutes} = require('./middlewares/loggers') 
 
 const app = express();
 const server = require("http").createServer(app);
@@ -20,6 +21,7 @@ const io = require("socket.io")(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(loggerRoutes)
 
 app.use(
   session({
@@ -61,6 +63,12 @@ app.use("/api/productos", productsRoutes);
 app.use("/api/", productsRoutes);
 app.use("/randoms", forkRoutes);
 app.use("/", authRoutes);
+app.get("*", loggerNoRoutes,function (req, res) {
+  res.status(404).send({
+    status: "error",
+    data: "404: Page not found",
+  });
+});
 
 passport.use(
   "login",

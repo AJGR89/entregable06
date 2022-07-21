@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.js",
-    "start": "node ./src/index.js"
+    "test": "node ./src/benchmark.js",
+    "start": "0x ./src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "autocannon": "^7.9.0",
     "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.0",
@@ -19,12 +22,14 @@
     "express-session": "^1.17.3",
     "forever": "^4.0.3",
     "knex": "^2.0.0",
+    "log4js": "^6.6.0",
     "minimist": "^1.2.6",
     "mongoose": "^6.4.0",
     "mysql": "^2.18.1",
     "normalizr": "^3.6.2",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "pino": "^8.2.0",
     "socket.io": "^4.5.0",
     "sqlite3": "^5.0.8"
   },

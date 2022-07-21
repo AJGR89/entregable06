@@ -6,6 +6,8 @@ faker.locale = "es";
 const { commerce, image, random } = faker;
 let id = 0;
 
+const {loggerE} = require('../middlewares/loggers')
+
 const router = Router();
 
 //GEL TEST
@@ -31,23 +33,27 @@ router.get("/", async (req, res) => {
     res.render("products", { products: products });
   } catch (error) {
     res.status(404).json({ error: "productos no encontrados" });
+    loggerE.error({ error: "productos no encontrados" })
   }
 });
 
 //GET BY ID
 router.get("/:id", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
+    // const id = parseInt(req.params.id);
+    const id = req.params.id;
     const product = await myProducts.getById(id);
     // console.log(product);
     if (product == null) {
       res.status(404).json({ error: "producto no encontrado" });
+      loggerE.error("producto no encontrado")
       return;
     } else {
       res.status(200).json(product);
       return;
     }
   } catch (error) {
+    loggerE.error("producto no encontrado")
     res.status(404).json({ error: "producto no encontrado" });
   }
 });
@@ -65,8 +71,11 @@ router.post("/", async (req, res) => {
       res.status(200).redirect("/");
     } else {
       res.status(500).json({ error: "producto no creado" });
+      loggerE.error({ error: "producto no creado" })
     }
-  } catch (error) {}
+  } catch (error) {
+    loggerE.error({ error: "producto no creado" })
+  }
 });
 
 //UPDATE BY ID
@@ -79,9 +88,11 @@ router.put("/:id", async (req, res) => {
       res.status(200).json({ msg: `product0 ${id} actualizado` });
       return;
     }
+    loggerE.error({ error: `producto ${id} no encontrado` })
     return res.status(500).json({ error: `producto ${id} no encontrado` });
   } catch (error) {
     res.status(500).json({ error: `producto ${id} no encontrado` });
+    loggerE.error({ error: `producto ${id} no encontrado` })
   }
 });
 
@@ -94,9 +105,11 @@ router.delete("/:id", async (req, res) => {
       res.status(200).json({ msg: `producto ${id} eliminado` });
     } else {
       res.status(500).json({ msg: `producto ${id} no encontrado` });
+      loggerE.error({ error: `producto ${id} no encontrado` })
     }
   } catch (error) {
     res.status(500).json({ error: `producto ${id} no encontrado` });
+    loggerE.error({ error: `producto ${id} no encontrado` })
   }
 });
 

@@ -1,0 +1,11 @@
+[2022-07-20T22:02:54.385] [WARN] mywarn - route: '/logina' || method: GET
+[2022-07-20T22:02:58.825] [WARN] mywarn - route: '/logina' || method: GET
+[2022-07-20T22:03:02.132] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-07-20T22:03:05.452] [WARN] mywarn - route: '/logina' || method: GET
+[2022-07-20T22:05:30.386] [WARN] mywarn - route: '/logina' || method: GET
+[2022-07-20T22:05:31.013] [WARN] mywarn - route: '/logina' || method: GET
+[2022-07-20T22:05:37.640] [WARN] mywarn - route: '/logina' || method: GET
+[2022-07-20T22:14:10.639] [WARN] mywarn - route: '/ejemplo' || method: GET
+[2022-07-20T22:27:00.564] [WARN] mywarn - route: '/ejemplo' || method: GET
+[2022-07-20T22:45:52.238] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-07-20T22:53:05.787] [WARN] mywarn - route: '/favicon.ico' || method: GET
