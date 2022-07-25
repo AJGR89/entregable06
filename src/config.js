@@ -1,6 +1,7 @@
 const { path } = require("path");
 const { config } = require("dotenv");
 const parseargs = require("minimist");
+const aws = require('aws-sdk');
 // const options = {alias:{p:'PORT'}}
 // const args = parseargs(process.argv.slice(2),options)
 const args = parseargs(process.argv.slice(2));
@@ -30,13 +31,21 @@ const info = {
 
 config();
 
-const PORT = args.p || 8080;
+
+
+let s3 = new aws.S3({
+  PORT: process.env.PORT,
+  MONGODB_URI: process.env.MONGODB_URI
+});
+
+
+const PORT = s3.PORT || 8080;
 const MODE = args.mode || "FORK"
 
 console.log(`Mode: ${MODE} | Port: ${PORT} `);
 
 const MONGODB_URI =
-  process.env.MONGODB_URI ||
+s3.MONGODB_URI ||
   "mongodb://devuser:devpassword@localhost:27017/ecommerce?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
 
 module.exports = {
