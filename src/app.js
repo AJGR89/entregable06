@@ -19,6 +19,8 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
+const {MONGODB_URI} = require('./config')
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(loggerRoutes)
@@ -27,7 +29,7 @@ app.use(
   session({
     store: MongoStore.create({
       mongoUrl:
-        "mongodb://devuser:devpassword@localhost:27017/sesiones?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false",
+      MONGODB_URI,
       autoRemove: "interval",
       autoRemoveInterval: 1,
       ttl: 10 * 60,

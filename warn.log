@@ -9,3 +9,4 @@
 [2022-07-20T22:27:00.564] [WARN] mywarn - route: '/ejemplo' || method: GET
 [2022-07-20T22:45:52.238] [WARN] mywarn - route: '/favicon.ico' || method: GET
 [2022-07-20T22:53:05.787] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-07-25T20:34:19.743] [WARN] mywarn - route: '/favicon.ico' || method: GET
