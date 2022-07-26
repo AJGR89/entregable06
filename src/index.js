@@ -1,4 +1,4 @@
-const { server, io } = require("./app");
+const { server, io,app } = require("./app");
 const { myPosts, myProducts } = require("./database");
 const { PORT } = require("./config");
 const { schema, denormalize, normalize } = require("normalizr");
@@ -23,42 +23,42 @@ const mensajes = new schema.Entity("mensajes", {
 });
 
 // /* SERVER */
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server on port: http://localhost:${PORT}/`);
 });
-server.on("error", (error) => {
+app.on("error", (error) => {
   console.log(error);
 });
 
 /* WS */
-io.on("connection", async (socket) => {
-  //init products table
-  const products = await myProducts.getAll();
-  socket.emit("allproducts", { products: products });
+// io.on("connection", async (socket) => {
+//   //init products table
+//   const products = await myProducts.getAll();
+//   socket.emit("allproducts", { products: products });
 
-  socket.on("addproduct", async (product) => {
-    console.log("\n\n recibiendo producto ", product);
-    const newProduct = await myProducts.save(product);
-    const products = await myProducts.getAll();
-    io.sockets.emit("allproducts", { products: products });
-  });
+//   socket.on("addproduct", async (product) => {
+//     console.log("\n\n recibiendo producto ", product);
+//     const newProduct = await myProducts.save(product);
+//     const products = await myProducts.getAll();
+//     io.sockets.emit("allproducts", { products: products });
+//   });
 
-  //init messages
-  const myposts = await myPosts.getAll();
-  const postss = { id: 1, posts: JSON.parse(JSON.stringify(myposts)) };
-  const normalizedposts = normalize(postss, mensajes);
-  // print(normalizedposts.entities);
-  socket.emit("updateposts", normalizedposts);
+//   //init messages
+//   const myposts = await myPosts.getAll();
+//   const postss = { id: 1, posts: JSON.parse(JSON.stringify(myposts)) };
+//   const normalizedposts = normalize(postss, mensajes);
+//   // print(normalizedposts.entities);
+//   socket.emit("updateposts", normalizedposts);
 
-  socket.on("addpost", async (newpost) => {
-    console.log("\n\n recibiendo mensaje ", newpost);
+//   socket.on("addpost", async (newpost) => {
+//     console.log("\n\n recibiendo mensaje ", newpost);
 
-    const addPost = await myPosts.save(newpost);
-    const myposts = await myPosts.getAll();
-    const postss = { id: 1, posts: JSON.parse(JSON.stringify(myposts)) };
-    const normalizedposts = normalize(postss, mensajes);
-    // print(normalizedposts)
+//     const addPost = await myPosts.save(newpost);
+//     const myposts = await myPosts.getAll();
+//     const postss = { id: 1, posts: JSON.parse(JSON.stringify(myposts)) };
+//     const normalizedposts = normalize(postss, mensajes);
+//     // print(normalizedposts)
 
-    io.sockets.emit("updateposts", normalizedposts);
-  });
-});
+//     io.sockets.emit("updateposts", normalizedposts);
+//   });
+// });

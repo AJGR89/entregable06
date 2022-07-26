@@ -158,4 +158,5 @@ module.exports = {
   server,
   io,
   passport,
+  app
 };

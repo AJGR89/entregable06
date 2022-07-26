@@ -1,11 +1,17 @@
-node_modules
+/node_modules
 
 ~$Resumen.pptx
 
-.txt
+/7716.0x
 
-.pdf
+/18120.0x
 
-.log
+/24212.0x
 
-.0x
+*.txt
+
+*.pdf
+
+*.log
+
+*.0x
