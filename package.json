@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "test": "node ./src/benchmark.js",
-    "start": "0x ./src/index.js"
+    "start": "node ./src/index.js"
   },
   "keywords": [],
   "author": "",
