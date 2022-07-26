@@ -1,9 +1,9 @@
 const express = require("express");
 const { Router } = express;
-const { faker } = require("@faker-js/faker");
+// const { faker } = require("@faker-js/faker");
 const { myProducts } = require("../database");
-faker.locale = "es";
-const { commerce, image, random } = faker;
+// faker.locale = "es";
+// const { commerce, image, random } = faker;
 let id = 0;
 
 const {loggerE} = require('../middlewares/loggers')
@@ -16,9 +16,9 @@ router.get("/productos-test", (req, res) => {
   for (let i = 0; i < 5; i++) {
     products.push({
       _id: id,
-      title: commerce.product(),
-      price: random.numeric(6, { bannedDigits: ["0"] }),
-      thumbnail: image.imageUrl(),
+      title: `tittle ${i}`,
+      price: Math.floor(Math.random() * 10000),
+      thumbnail: `thumbnail${i}`,
     });
     id++;
   }
