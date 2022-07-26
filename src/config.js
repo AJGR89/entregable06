@@ -32,23 +32,16 @@ const info = {
 config();
 
 
-
-let s3 = new aws.S3({
-  PORT: process.env.PORT,
-  MONGODB_URI: process.env.MONGODB_URI
-});
+console.log(`Moongo: ${process.env.MONGODB_URI} | Port: ${process.env.PORT} `);
 
 
-console.log(`Moongo: ${s3.MONGODB_URI} | Port: ${s3.PORT} `);
-
-
-const PORT = s3.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 const MODE = args.mode || "FORK"
 
 console.log(`Mode: ${MODE} | Port: ${PORT} `);
 
 const MONGODB_URI =
-s3.MONGODB_URI ||
+process.env.MONGODB_URI ||
   "mongodb://devuser:devpassword@localhost:27017/ecommerce?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
 
 module.exports = {
