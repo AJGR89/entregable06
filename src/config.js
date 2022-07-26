@@ -39,6 +39,9 @@ let s3 = new aws.S3({
 });
 
 
+console.log(`Moongo: ${s3.MONGODB_URI} | Port: ${s3.PORT} `);
+
+
 const PORT = s3.PORT || 8080;
 const MODE = args.mode || "FORK"
 
