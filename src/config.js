@@ -32,7 +32,7 @@ const info = {
 config();
 
 
-console.log(`Moongo: ${process.env.MONGODB_URI} | Port: ${process.env.PORT} `);
+// console.log(`Moongo: ${process.env.MONGODB_URI} | Port: ${process.env.PORT} `);
 
 
 const PORT = process.env.PORT || 8080;
