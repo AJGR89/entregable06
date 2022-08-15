@@ -1,4 +1,4 @@
-const {MensajesMongo,ProductsMongo, UsersMongo} = require("./containers/mongo.container");
+const {MensajesMongo,ProductsMongo, UsersMongo} = require("../containers/mongo.container");
 
 myPosts = new MensajesMongo();
 myProducts = new ProductsMongo();

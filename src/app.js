@@ -7,7 +7,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const myUsers = require("./database");
+const myUsers = require("./daos/mongo.dao");
 const bcrypt = require("bcrypt");
 const User = require("./models/user");
 const forkRoutes = require("./routes/fork.routes");
@@ -100,7 +100,7 @@ passport.use(
   new LocalStrategy(
     { passReqToCallback: true },
     (req, username, password, callback) => {
-      User.findOne({ username: username }, (err, user) => {
+      User.findOne({ username: username }, async (err, user) => {
         if (err) {
           console.log("Error al registrarse");
           return callback(err);
@@ -111,8 +111,6 @@ passport.use(
           return callback(null, false);
         }
 
-        console.log("BODY EN PASSPORT******************", req.body);
-
         const newUser = {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
@@ -121,9 +119,7 @@ passport.use(
           password: createHash(password),
         };
 
-        console.log(newUser);
-
-        User.create(newUser, (err, userWithId) => {
+        await User.create(newUser, (err, userWithId) => {
           if (err) {
             console.log("Error al registrarse");
             return callback(err);

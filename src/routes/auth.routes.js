@@ -1,100 +1,61 @@
 const express = require("express");
 const { Router } = express;
-const { myProducts } = require("../database");
+const { myProducts } = require("../daos/mongo.dao");
 const { checkLogged } = require("../middlewares/auth");
 const passport = require("passport");
-const { info } = require("../config");
 const compression = require("compression");
+const {getHome,
+  renderSingup,
+  postSingup,
+  singupErr,
+  renderLogin,
+  postLogin,
+  loginErr,
+  logout,
+  getInfo,
+  infozip,} = require('../controllers/auth.controller')
 
 const router = Router();
 
 /* INDEX */
-router.get("/", async (req, res) => {
-  if (req.isAuthenticated()) {
-    const allproducts = await myProducts.getAll();
-    const products = JSON.parse(JSON.stringify(allproducts));
-    const user = JSON.parse(JSON.stringify(req.user));
-    // console.log(user)
-    res.render("index", { products: products, name: user });
-    // res.render('profileUser', { user: user, isUser:true })
-  } else {
-    res.redirect("login");
-  }
-});
+router.get("/", getHome);
 
 /* get SINGUP */
-router.get("/signup", (req, res) => {
-  return res.render("signup", { layout: false });
-});
+router.get("/signup", renderSingup);
 
 /* post SINGUP */
 router.post(
   "/signup",
   passport.authenticate("signup", { failureRedirect: "/failsignup" }),
-  (req, res) => {
-    if (req.isAuthenticated()) {
-      res.redirect("/");
-    } else {
-      res.redirect("login");
-    }
-  }
+  postSingup
 );
 
 /* get SINGUP */
-router.get("/failsignup", (req, res) => {
-  return res.render("siguperr", { layout: false });
-});
+router.get("/failsignup", singupErr);
 
 /* SIGNUP error */
-router.get("/signuperr", (req, res) => {
-  res.render("signuperr", { layout: false });
-});
+router.get("/signuperr", singupErr);
 
 /* get LOGIN */
-router.get("/login", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.redirect("/");
-  } else {
-    res.render("login");
-  }
-});
+router.get("/login", renderLogin);
 
 /* post LOGIN */
 router.post(
   "/login",
   passport.authenticate("login", { failureRedirect: "/loginerr" }),
-  (req, res) => {
-    if (req.isAuthenticated()) {
-      res.redirect("/");
-    } else {
-      res.redirect("login");
-    }
-  }
+  postLogin
 );
 
 /* LOGIN error */
-router.get("/loginerr", (req, res) => {
-  res.render("loginerr", { layout: false });
-});
+router.get("/loginerr", loginErr);
 
 /* LOGOUT */
-router.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (!err) {
-      res.redirect("login");
-    }
-  });
-});
+router.get("/logout", logout);
 
 /* get INFO */
-router.get("/info", (req, res) => {
-  // console.log({ info: info });
-  res.render("info", { info: info, layout: false });
-});
+router.get("/info", getInfo);
+
 /* get INFO gzip */
-router.get("/infogzip", compression(), (req, res) => {
-  // app.use(compression());
-  res.render("info", { info: info, layout: false });
-});
+router.get("/infogzip", compression(), infozip);
 
 module.exports = router;
