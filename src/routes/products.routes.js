@@ -1,12 +1,6 @@
 const express = require("express");
 const { Router } = express;
-const {
-  getProducts,
-  getProductById,
-  addProduct,
-  updateProductById,
-  deleteProductById,
-} = require("../controllers/products.controller");
+const { ProductsController } = require("../controllers/products.controller");
 
 let id = 0;
 
@@ -28,19 +22,19 @@ router.get("/productos-test", (req, res) => {
   res.status(200).render("test-products", { products: products });
 });
 
-//GEL ALL
-router.get("/", getProducts);
+class RouterProducts {
+  constructor() {
+    this.productsController = new ProductsController();
+  }
+  start() {
+    router.get("/", this.productsController.getProducts); //GEL ALL
+    router.get("/:id", this.productsController.getProductById); //GET BY ID
+    router.post("/", this.productsController.addProduct); //ADD PRODUCT
+    router.put("/:id", this.productsController.updateProductById); //UPDATE BY ID
+    router.delete("/:id", this.productsController.deleteProductById); //DELET BY ID
 
-//GET BY ID
-router.get("/:id", getProductById);
+    return router;
+  }
+}
 
-//ADD PRODUCT
-router.post("/", addProduct);
-
-//UPDATE BY ID
-router.put("/:id", updateProductById);
-
-//DELET BY ID
-router.delete("/:id", deleteProductById);
-
-module.exports = router;
+module.exports = { RouterProducts };

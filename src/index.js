@@ -1,5 +1,5 @@
 const { server, io,app } = require("./app");
-const { myPosts, myProducts } = require("./daos/mongo.dao");
+// const { myPosts, myProducts } = require("./daos/mongo.dao");
 const { PORT } = require("./config");
 const { schema, denormalize, normalize } = require("normalizr");
 const util = require("util");

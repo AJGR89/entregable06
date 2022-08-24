@@ -1,25 +1,36 @@
 const express = require("express");
 const path = require("path");
 const { create } = require("express-handlebars");
-const productsRoutes = require("./routes/products.routes");
+// const productsRoutes = require("./routes/products.routes");
 const authRoutes = require("./routes/auth.routes");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const myUsers = require("./daos/mongo.dao");
+// const myUsers = require("./daos/mongo.dao");
 const bcrypt = require("bcrypt");
 const User = require("./models/user");
 const forkRoutes = require("./routes/fork.routes");
 const cluster = require("cluster");
 const { MODE, PORT, cpus } = require("./config");
 const {loggerRoutes,loggerNoRoutes} = require('./middlewares/loggers') 
+const {RouterProducts} = require("./routes/products.routes");
+const {RouterAuth} = require("./routes/auth.routes");
+const { connect, mongoose } = require("mongoose");
 
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
 const {MONGODB_URI} = require('./config')
+
+const dbConnect = ()=>{
+  if (mongoose.connection.readyState == 0) {
+    const db = connect(MONGODB_URI);
+    console.log("DB connected to MONGO");
+  }
+}
+dbConnect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -61,10 +72,13 @@ app.set("views", path.resolve(__dirname, "./views"));
 
 // app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api/productos", productsRoutes);
-app.use("/api/", productsRoutes);
+const routerProducts = new RouterProducts();
+const routerAuth = new RouterAuth();
+
+app.use("/api/productos", routerProducts.start());
+// app.use("/api/", productsRoutes);
 app.use("/randoms", forkRoutes);
-app.use("/", authRoutes);
+app.use("/", routerAuth.start());
 app.get("*", loggerNoRoutes,function (req, res) {
   res.status(404).send({
     status: "error",

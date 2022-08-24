@@ -1,8 +1,8 @@
 const { connect, mongoose } = require("mongoose");
-const { MONGODB_URI } = require("../config");
-const Message = require("../models/message");
-const Product = require("../models/product");
-const User = require("../models/user");
+const { MONGODB_URI } = require("../../config");
+const Message = require("../../models/message");
+const Product = require("../../models/product");
+const User = require("../../models/user");
 const bcrypt = require("bcrypt");
 
 // CLASS MESSAGES MONGO

@@ -23,7 +23,7 @@ config();
 
 const PORT = process.env.PORT || 8080;
 const MODE = args.mode || "FORK";
-const SOUCE_DATA = process.env.SOURCE_DATA || "MONGODB"
+const SOURCE_DATA = process.env.SOURCE_DATA || "MONGODB"
 
 console.log(`Mode: ${MODE} | Port: ${PORT} `);
 
@@ -35,6 +35,7 @@ module.exports = {
   MONGODB_URI,
   PORT,
   MODE,
+  SOURCE_DATA,
   info,
   cpus,
 };
