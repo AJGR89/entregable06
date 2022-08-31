@@ -13,34 +13,34 @@ const User = require("./models/user");
 const forkRoutes = require("./routes/fork.routes");
 const cluster = require("cluster");
 const { MODE, PORT, cpus } = require("./config");
-const {loggerRoutes,loggerNoRoutes} = require('./middlewares/loggers') 
-const {RouterProducts} = require("./routes/products.routes");
-const {RouterAuth} = require("./routes/auth.routes");
+const { loggerRoutes, loggerNoRoutes } = require("./middlewares/loggers");
+const { RouterProducts } = require("./routes/products.routes");
+const { RouterAuth } = require("./routes/auth.routes");
 const { connect, mongoose } = require("mongoose");
 
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
+const cors = require("cors");
 
-const {MONGODB_URI} = require('./config')
+const { MONGODB_URI } = require("./config");
 
-const dbConnect = ()=>{
+const dbConnect = () => {
   if (mongoose.connection.readyState == 0) {
     const db = connect(MONGODB_URI);
     console.log("DB connected to MONGO");
   }
-}
+};
 dbConnect();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(loggerRoutes)
+app.use(loggerRoutes);
 
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl:
-      MONGODB_URI,
+      mongoUrl: MONGODB_URI,
       autoRemove: "interval",
       autoRemoveInterval: 1,
       ttl: 10 * 60,
@@ -79,7 +79,7 @@ app.use("/api/productos", routerProducts.start());
 // app.use("/api/", productsRoutes);
 app.use("/randoms", forkRoutes);
 app.use("/", routerAuth.start());
-app.get("*", loggerNoRoutes,function (req, res) {
+app.get("*", loggerNoRoutes, function (req, res) {
   res.status(404).send({
     status: "error",
     data: "404: Page not found",
@@ -168,5 +168,5 @@ module.exports = {
   server,
   io,
   passport,
-  app
+  app,
 };

@@ -1,0 +1,4 @@
+[2022-08-30T21:47:47.471] [ERROR] myerror - producto no encontrado
+[2022-08-30T21:48:34.508] [ERROR] myerror - producto no encontrado
+[2022-08-30T22:21:34.008] [ERROR] myerror - { error: 'producto 62 no encontrado' }
+[2022-08-30T22:22:37.199] [ERROR] myerror - { error: 'producto 62 no encontrado' }

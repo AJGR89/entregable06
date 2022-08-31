@@ -2,9 +2,10 @@ const express = require("express");
 const { Router } = express;
 const { ProductsController } = require("../controllers/products.controller");
 
-let id = 0;
 
 const router = Router();
+
+let id = 0;
 
 //GEL TEST
 router.get("/productos-test", (req, res) => {

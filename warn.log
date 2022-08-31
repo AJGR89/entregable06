@@ -12,3 +12,6 @@
 [2022-08-15T15:35:23.397] [WARN] mywarn - route: '/favicon.ico' || method: GET
 [2022-08-23T23:55:58.077] [WARN] mywarn - route: '/favicon.ico' || method: GET
 [2022-08-24T00:35:36.087] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-08-30T20:00:40.579] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-08-30T20:00:53.456] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-08-30T20:04:04.873] [WARN] mywarn - route: '/favicon.ico' || method: GET

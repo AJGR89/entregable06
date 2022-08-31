@@ -62,3 +62,7 @@ app.on("error", (error) => {
 //     io.sockets.emit("updateposts", normalizedposts);
 //   });
 // });
+
+module.exports ={
+  app
+}

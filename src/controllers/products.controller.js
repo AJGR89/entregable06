@@ -8,7 +8,7 @@ class ProductsController {
   getProducts = async (req, res) => {
     try {
       const products = await this.myProducts.getAll();
-      res.render("products", { products: products });
+      res.status(200).json({ products: products });
     } catch (error) {
       res.status(404).json({ error: "productos no encontrados" });
       loggerE.error({ error: "productos no encontrados" });
@@ -44,7 +44,7 @@ class ProductsController {
         const allproducts = await this.myProducts.getAll();
         const products = JSON.parse(JSON.stringify(allproducts));
         //   socket.emit('allproducts',{products:products})
-        res.status(200).redirect("/");
+        res.status(302).redirect("/");
       } else {
         res.status(500).json({ error: "producto no creado" });
         loggerE.error({ error: "producto no creado" });
@@ -73,7 +73,7 @@ class ProductsController {
 
   deleteProductById = async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const deleteProduct = await this.myProducts.deleteById(id);
       if (deleteProduct) {
         res.status(200).json({ msg: `producto ${id} eliminado` });
