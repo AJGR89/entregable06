@@ -128,6 +128,17 @@ class ProductsMongo {
       return false;
     }
   }
+  /* DELETE ELEMENTS */
+  async updateById(id,product) {
+    try {
+      console.log(product)
+      console.log("######################")
+      const updateProduct = await Product.findByIdAndUpdate(id,product);
+      return updateProduct
+    } catch (error) {
+      // console.log("[deleteAll()]: could not delete all elements");
+    }
+  }
 
   /* DELETE ELEMENTS */
   async deleteAll() {

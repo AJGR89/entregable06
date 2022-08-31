@@ -15,3 +15,10 @@
 [2022-08-30T20:00:40.579] [WARN] mywarn - route: '/favicon.ico' || method: GET
 [2022-08-30T20:00:53.456] [WARN] mywarn - route: '/favicon.ico' || method: GET
 [2022-08-30T20:04:04.873] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-08-30T23:56:30.155] [WARN] mywarn - route: '/socket.io/socket.io.js' || method: GET
+[2022-08-30T23:56:30.486] [WARN] mywarn - route: '/socket.io/socket.io.js' || method: GET
+[2022-08-31T00:07:55.555] [WARN] mywarn - route: '/socket.io/socket.io.js' || method: GET
+[2022-08-31T00:07:55.853] [WARN] mywarn - route: '/socket.io/socket.io.js' || method: GET
+[2022-08-31T00:23:36.195] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-08-31T00:23:38.811] [WARN] mywarn - route: '/favicon.ico' || method: GET
+[2022-08-31T01:00:48.372] [WARN] mywarn - route: '/favicon.ico' || method: GET

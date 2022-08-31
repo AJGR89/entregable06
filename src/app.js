@@ -22,8 +22,10 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const cors = require("cors");
+const { graphqlHTTP } = require("express-graphql");
 
 const { MONGODB_URI } = require("./config");
+const { ProductsRoutesGraphql } = require("./graphql/schema");
 
 const dbConnect = () => {
   if (mongoose.connection.readyState == 0) {
@@ -70,7 +72,30 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.resolve(__dirname, "./views"));
 
-// app.use(express.static(path.join(__dirname, "public")));
+const productsRoutesGraphql = new ProductsRoutesGraphql();
+const graphSchema = productsRoutesGraphql.schema;
+const {
+  createProduct,
+  getProductById,
+  getAllProducts,
+  updateProductById,
+  deleteProductById,
+} = productsRoutesGraphql;
+app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: graphSchema,
+    rootValue: {
+      createProduct,
+      getProductById,
+      getAllProducts,
+      updateProductById,
+      deleteProductById
+    },
+    graphiql: true,
+  })
+);
 
 const routerProducts = new RouterProducts();
 const routerAuth = new RouterAuth();
